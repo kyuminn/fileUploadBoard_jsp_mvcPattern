@@ -10,7 +10,12 @@ public class ListService {
 	public ListService(BoardDao dao) {
 		this.dao= dao;
 	}
-	public List<BoardVo> list(){
-		return dao.list();
+	public List<BoardVo> list(int startRow, int endRow){
+		return dao.list(startRow,endRow);
+		//return dao.list();
+	}
+	
+	public int getArticleCount() {
+		return dao.getArticleCount();
 	}
 }

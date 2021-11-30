@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
 </style>
 </head>
 <body>
-	<h2>파일 목록</h2>
+	<h2>파일 목록[${count }개의 파일]</h2>
 	<table class="upload">
 		<tr>
 			<td><a href="${pageContext.request.contextPath}/upload">파일 올리기</a></td>
@@ -50,5 +51,27 @@
 		</td>
 	</tr>
 	</table>
+	
+<c:if test="${count>0 }">
+	<c:set var="imsi" value="${count%pageSize ==0? 0:1 }"/>
+	<c:set var="pageCount" value="${count/pageSize +imsi }"/>
+	<fmt:parseNumber var ="pageCount" value="${pageCount}" integerOnly="true"/>
+	<c:set var="pageBlock" value="${3}"/>
+	<fmt:parseNumber var="result" value="${(currentPage-1)/pageBlock }" integerOnly ="true"/>
+	<c:set var="startPage" value="${result*pageBlock +1 }"/>
+	<c:set var="endPage" value="${startPage+pageBlock -1 }"/>
+	<c:if test="${endPage>pageCount }">
+		<c:set var="endPage" value="${pageCount }"/>
+	</c:if>
+	<c:if test="${startPage > pageBlock }">
+		<a href="${pageContext.request.contextPath}/list?pageNum=${startPage-pageBlock}">이전</a>
+	</c:if>
+	<c:forEach var="i" begin="${startPage }" end="${endPage }">
+		<a href="${pageContext.request.contextPath}/list?pageNum=${i}">[${i}]</a>
+	</c:forEach>
+	<c:if test="${endPage < pageCount }">
+		<a href="${pageContext.request.contextPath}/list?pageNum=${startPage+pageBlock}">다음</a>
+	</c:if>
+</c:if>
 </body>
 </html>

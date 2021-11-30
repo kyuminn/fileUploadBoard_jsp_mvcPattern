@@ -31,6 +31,7 @@
 				<c:forEach var="fileName" items="${fileNames }">
 					<c:if test="${fileName eq vo.filename}">
 						<!-- <a href="${pageContext.request.contextPath}/WEB-INF/upload/${fileName}" download>${fileName} 다운로드</a>-->
+						<!-- 브라우저에서 WEB-INF 안에 직접 접근할 수 없음! -->
 						<!-- Servers >context.xml 에 프로젝트 외부 경로와 mount 설정 해주기 -->
 						<a href="/upload/${fileName}" download>${fileName}  다운로드</a>
 					</c:if>

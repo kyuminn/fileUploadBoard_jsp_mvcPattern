@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h2>Upload Form</h2>
-	<form action="${pageContext.request.contextPath}/uploadProc" method="post" enctype="multipart/form-data">
+	<form name="uploadForm" action="${pageContext.request.contextPath}/uploadProc" method="post" enctype="multipart/form-data" onsubmit="return uploadCheck()">
 		<table border="1">
 
 			<tr>

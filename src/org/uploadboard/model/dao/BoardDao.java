@@ -47,27 +47,65 @@ public class BoardDao {
 	}
 	
 	// 리스트
-	public List<BoardVo> list(){
-		List<BoardVo> ls = new ArrayList<>();
-		String sql = "select * from uploadboard";
-		try(Connection conn = ConnectionUtil.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()){
-			while(rs.next()) {
-				BoardVo vo = new BoardVo();
-				vo.setNum(rs.getInt("num"));
-				vo.setDescription(rs.getString("description"));
-				vo.setFilename(rs.getString("filename"));
-				vo.setUploader(rs.getString("uploader"));
-				vo.setRegdate(rs.getTimestamp("regdate"));
-				vo.setReadcount(rs.getInt("readcount"));
-				vo.setPassword(rs.getString("password"));
-				ls.add(vo);
+	public List<BoardVo> list(int startRow, int endRow){
+// 페이징 처리 전
+//		List<BoardVo> ls = new ArrayList<>();
+//		String sql = "select * from uploadboard order by num desc";
+//		try(Connection conn = ConnectionUtil.getConnection();
+//				PreparedStatement pstmt = conn.prepareStatement(sql);
+//				ResultSet rs = pstmt.executeQuery()){
+//			while(rs.next()) {
+//				BoardVo vo = new BoardVo();
+//				vo.setNum(rs.getInt("num"));
+//				vo.setDescription(rs.getString("description"));
+//				vo.setFilename(rs.getString("filename"));
+//				vo.setUploader(rs.getString("uploader"));
+//				vo.setRegdate(rs.getTimestamp("regdate"));
+//				vo.setReadcount(rs.getInt("readcount"));
+//				vo.setPassword(rs.getString("password"));
+//				ls.add(vo);
+//			}
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return ls != null ? ls : null;
+//		페이징 처리 후
+		
+		String sql="select * from "
+				+ "(select rownum rnum,num,description,filename,uploader,"
+				+ "regdate,readcount,password from "
+				+ "(select * from uploadboard order by num desc)) "
+				+ "where rnum>=? and rnum<=?";
+		List<BoardVo> ls = new ArrayList<BoardVo>();
+		ResultSet rs = null;
+		try(Connection conn= ConnectionUtil.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				do {
+					BoardVo vo = new BoardVo();
+					vo.setNum(rs.getInt("num"));
+					vo.setDescription(rs.getString("description"));
+					vo.setFilename(rs.getString("filename"));
+					vo.setUploader(rs.getString("uploader"));
+					vo.setRegdate(rs.getTimestamp("regdate"));
+					vo.setReadcount(rs.getInt("readcount"));
+					vo.setPassword(rs.getString("password"));
+					ls.add(vo);
+				}while(rs.next());
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				if (rs !=null) rs.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		return ls != null ? ls : null;
+		return ls;
 	}
 	
 	// 한 개의 게시글 가져오기 (readcount +1 )
@@ -246,5 +284,21 @@ public class BoardDao {
 			}
 		}
 		return result;
+	}
+	
+	// 글의 개수를 가져오는 메서드
+	public int getArticleCount() {
+		String sql="select count(*) from uploadboard";
+		int x = 0;
+		try(Connection conn = ConnectionUtil.getConnection();
+				PreparedStatement pstmt= conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();){
+			if (rs.next()) {
+				x = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return x;
 	}
 }

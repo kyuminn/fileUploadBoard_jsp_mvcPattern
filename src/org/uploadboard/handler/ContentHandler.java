@@ -22,8 +22,7 @@ public class ContentHandler implements CommandHandler{
 		int num = Integer.parseInt(request.getParameter("num"));
 		BoardVo vo = contentService.selectOne(num);
 		request.setAttribute("vo", vo);
-//		String savePath ="/WEB-INF/upload";
-//		String uploadFilePath = request.getSession().getServletContext().getRealPath(savePath);
+		
 		String uploadFilePath = "C:/upload";
 		File uploadDir = null;
 		
