@@ -4,7 +4,7 @@
  <c:if test="${result==1 }">
  	<meta http-equiv="Refresh" content="0;url=${pageContext.request.contextPath}/list">
  </c:if>
- <c:if test="${result==0 }">
+ <c:if test="${result!=1 }">
  	<script>
  		alert("비밀번호가 일치하지 않습니다!");
  		history.go(-1);

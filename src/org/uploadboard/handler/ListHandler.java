@@ -15,8 +15,7 @@ import org.uploadboard.model.vo.BoardVo;
 public class ListHandler implements CommandHandler{
 	private BoardDao dao = BoardDao.getInstance();
 	private ListService listService = new ListService(dao);
-//	List<BoardVo> ls = listService.list();
-//	request.setAttribute("ls", ls);
+
 	@Override
 	public String handlerAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

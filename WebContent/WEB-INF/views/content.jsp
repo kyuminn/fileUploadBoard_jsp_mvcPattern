@@ -8,6 +8,7 @@
 <title>내용</title>
 </head>
 <body>
+	<h2>Content</h2>
 	<table border="1">
 		<tr>
 			<th>글번호</th>

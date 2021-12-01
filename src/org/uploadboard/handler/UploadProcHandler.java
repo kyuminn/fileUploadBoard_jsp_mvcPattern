@@ -24,8 +24,6 @@ public class UploadProcHandler implements CommandHandler{
 	public String handlerAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-//		String savePath = "/WEB-INF/upload";
-//		String uploadFilePath =  request.getSession().getServletContext().getRealPath(savePath);
 		int uploadFileSizeLimit = 5 * 1024 *1024;
 		String encType= "UTF-8";
 		String uploadFilePath = "C:/upload";
@@ -36,7 +34,6 @@ public class UploadProcHandler implements CommandHandler{
 			e.printStackTrace();
 		}
 		System.out.println("서버상 실제 경로 :"+ uploadFilePath);
-		/* 서버상 실제 경로 :C: dev\workspacejsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\org.uploadboard\WEB-INF\\upload */
 		// form 의 encType이 multipart/form-data 인 경우 request 객체로 파라미터를 가져올 수 없다.
 		// 대신 MultipartRequest 객체로 가져올 수 있음!
 		String uploader =multi.getParameter("uploader");

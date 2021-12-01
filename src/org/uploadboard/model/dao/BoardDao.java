@@ -249,30 +249,17 @@ public class BoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int result = -1 ; // 해당 번호 없음
-		String dbPassword = "";
+		int result = -1 ; 
 		try {
 			conn = ConnectionUtil.getConnection();
-			sql = "select password from uploadboard where num=?";
+			sql = "update uploadboard set description=?,filename=?,regdate=? where num=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getNum());
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				dbPassword = rs.getString(1);
-				if (vo.getPassword().equals(dbPassword)) {
-					pstmt.close();
-					sql = "update uploadboard set description=?,filename=?,regdate=? where num=?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, vo.getDescription());
-					pstmt.setString(2, vo.getFilename());
-					pstmt.setTimestamp(3, vo.getRegdate()); // 수정한 시간으로 바뀜
-					pstmt.setInt(4, vo.getNum());
-					result = pstmt.executeUpdate(); // result = 1 이면 수정완료
-				}else {
-					result = 0 ; // 비밀번호 불일치
-					}
-				}
-			}catch(SQLException e) {
+			pstmt.setString(1, vo.getDescription());
+			pstmt.setString(2, vo.getFilename());
+			pstmt.setTimestamp(3, vo.getRegdate()); // 수정한 시간으로 바뀜
+			pstmt.setInt(4, vo.getNum());
+			result = pstmt.executeUpdate(); // result = 1 이면 수정완료
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			try {
@@ -289,16 +276,38 @@ public class BoardDao {
 	// 글의 개수를 가져오는 메서드
 	public int getArticleCount() {
 		String sql="select count(*) from uploadboard";
-		int x = 0;
+		int count = 0;
 		try(Connection conn = ConnectionUtil.getConnection();
 				PreparedStatement pstmt= conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();){
 			if (rs.next()) {
-				x = rs.getInt(1);
+				count = rs.getInt(1);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return x;
+		return count;
+	}
+	
+	// 비밀번호 검증용 메서드
+	public boolean isValidPassword(int num, String password) {
+		int result = -1;
+		String sql="select password from uploadboard where num=?";
+		ResultSet rs = null;
+		String dbPassword ="";
+		try(Connection conn = ConnectionUtil.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				dbPassword = rs.getString(1);
+				if (password.equals(dbPassword)) {
+					result = 1;
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return result==1?true:false;
 	}
 }

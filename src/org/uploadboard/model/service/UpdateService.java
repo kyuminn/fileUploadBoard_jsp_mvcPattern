@@ -14,6 +14,9 @@ public class UpdateService {
 		return dao.selectOneForUpdate(num);
 	}
 	
+	public boolean isValidPassword(int num, String password) {
+		return dao.isValidPassword(num, password);
+	}
 	public int update(BoardVo vo) {
 		return dao.update(vo);
 	}

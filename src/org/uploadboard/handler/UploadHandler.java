@@ -10,8 +10,7 @@ import org.uploadboard.model.dao.BoardDao;
 import org.uploadboard.model.service.UploadService;
 
 public class UploadHandler implements CommandHandler {
-//	private BoardDao uploadDao = BoardDao.getInstance();
-//	private UploadService uploadService = new UploadService(uploadDao);
+
 
 	@Override
 	public String handlerAction(HttpServletRequest request, HttpServletResponse response)

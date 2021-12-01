@@ -18,6 +18,7 @@ public class DeleteProcHandler implements CommandHandler {
 	@Override
 	public String handlerAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8"); // 한글이 포함된 파일명 삭제 시 
 		int num = Integer.parseInt(request.getParameter("num"));
 		String password = request.getParameter("password");
 		int result = deleteService.delete(num, password);
