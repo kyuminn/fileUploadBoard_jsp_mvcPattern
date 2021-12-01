@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h2>수정 페이지</h2>
-	<form action="${pageContext.request.contextPath}/updateProc?num=${vo.num}" method="post" encType="multipart/form-data">
+	<form action="${pageContext.request.contextPath}/updateProc.do?num=${vo.num}" method="post" encType="multipart/form-data">
 		<table border="1">
 			<tr>
 				<th width="150px">파일 설명</th>
@@ -34,7 +34,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" value="수정"> &nbsp;
-					<input type="button" value="목록" onclick="window.location='${pageContext.request.contextPath}/list'">
+					<input type="button" value="목록" onclick="window.location='${pageContext.request.contextPath}/list.do'">
 				</td>
 			</tr>
 		</table>

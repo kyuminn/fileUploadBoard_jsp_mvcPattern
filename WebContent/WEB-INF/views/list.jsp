@@ -20,7 +20,7 @@
 	<h2>파일 목록[${count }개의 파일]</h2>
 	<table class="upload">
 		<tr>
-			<td><a href="${pageContext.request.contextPath}/upload">파일 올리기</a></td>
+			<td><a href="${pageContext.request.contextPath}/upload.do">파일 올리기</a></td>
 		</tr>
 	</table>
 	<table border="1">
@@ -36,7 +36,7 @@
 			<tr>
 				<td>${article.num }</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/content?num=${article.num}">${article.description}</a>
+					<a href="${pageContext.request.contextPath}/content.do?num=${article.num}">${article.description}</a>
 				</td>
 				<td>${article.filename }</td>
 				<td>${article.uploader }</td>
@@ -46,8 +46,8 @@
 		</c:forEach>
 	<tr>
 		<td colspan="6" align="center">
-			<input type="button" value="메인으로" onclick="window.location='${pageContext.request.contextPath}/'">&nbsp;
-			<input type="button" value="파일 올리기" onclick="window.location='${pageContext.request.contextPath}/upload'">
+			<input type="button" value="메인으로" onclick="window.location='${pageContext.request.contextPath}/main.do'">&nbsp;
+			<input type="button" value="파일 올리기" onclick="window.location='${pageContext.request.contextPath}/upload.do'">
 		</td>
 	</tr>
 	</table>
@@ -64,13 +64,13 @@
 		<c:set var="endPage" value="${pageCount }"/>
 	</c:if>
 	<c:if test="${startPage > pageBlock }">
-		<a href="${pageContext.request.contextPath}/list?pageNum=${startPage-pageBlock}">이전</a>
+		<a href="${pageContext.request.contextPath}/list.do?pageNum=${startPage-pageBlock}">이전</a>
 	</c:if>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
-		<a href="${pageContext.request.contextPath}/list?pageNum=${i}">[${i}]</a>
+		<a href="${pageContext.request.contextPath}/list.do?pageNum=${i}">[${i}]</a>
 	</c:forEach>
 	<c:if test="${endPage < pageCount }">
-		<a href="${pageContext.request.contextPath}/list?pageNum=${startPage+pageBlock}">다음</a>
+		<a href="${pageContext.request.contextPath}/list.do?pageNum=${startPage+pageBlock}">다음</a>
 	</c:if>
 </c:if>
 </body>

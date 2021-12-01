@@ -3,5 +3,5 @@
 <!-- c tag의 경우 contextPath 가 자동으로 붙어서 나옴 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${flag==true}">
-	<c:redirect url="/list"></c:redirect>
+	<c:redirect url="/list.do"></c:redirect>
 </c:if>

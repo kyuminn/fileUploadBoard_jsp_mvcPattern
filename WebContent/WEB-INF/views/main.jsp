@@ -9,7 +9,7 @@
 <body>
 	<h1>파일 게시판 Main page</h1>
 	<br>
-	<input type="button" value="목록" onclick="window.location='${pageContext.request.contextPath}/list'">&nbsp;&nbsp;
-	<input type="button" value="파일 업로드" onclick="window.location='${pageContext.request.contextPath}/upload'">
+	<input type="button" value="목록" onclick="window.location='${pageContext.request.contextPath}/list.do'">&nbsp;&nbsp;
+	<input type="button" value="파일 업로드" onclick="window.location='${pageContext.request.contextPath}/upload.do'">
 </body>
 </html>

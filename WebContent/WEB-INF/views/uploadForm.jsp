@@ -5,10 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<script src="${pageContext.request.contextPath}/script.js">
+</script>
 </head>
 <body>
 	<h2>Upload Form</h2>
-	<form name="uploadForm" action="${pageContext.request.contextPath}/uploadProc" method="post" enctype="multipart/form-data" onsubmit="return uploadCheck()">
+	<form name="uploadForm" action="${pageContext.request.contextPath}/uploadProc.do" method="post" enctype="multipart/form-data" onsubmit="return uploadCheck()">
 		<table border="1">
 
 			<tr>
@@ -31,7 +33,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" value="업로드">
-					<input type="button" value="목록" onclick="window.location='${pageContext.request.contextPath}/list'">
+					<input type="button" value="목록" onclick="window.location='${pageContext.request.contextPath}/list.do'">
 				</td>
 			</tr>
 			

@@ -41,9 +41,9 @@
 		</tr>
 		<tr>
 			<td colspan="4" align="center">
-				<input type="button" value="수정" onclick="window.location='${pageContext.request.contextPath}/update?num=${vo.num}'">&nbsp;&nbsp;
-				<input type="button" value="삭제" onclick="window.location='${pageContext.request.contextPath}/delete?num=${vo.num}'">&nbsp;&nbsp;
-				<input type="button" value="목록" onclick="window.location='${pageContext.request.contextPath}/list'">
+				<input type="button" value="수정" onclick="window.location='${pageContext.request.contextPath}/update.do?num=${vo.num}'">&nbsp;&nbsp;
+				<input type="button" value="삭제" onclick="window.location='${pageContext.request.contextPath}/delete.do?num=${vo.num}'">&nbsp;&nbsp;
+				<input type="button" value="목록" onclick="window.location='${pageContext.request.contextPath}/list.do'">
 			</td>
 		</tr>
 	</table>

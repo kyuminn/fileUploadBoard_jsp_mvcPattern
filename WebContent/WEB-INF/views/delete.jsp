@@ -18,7 +18,7 @@
 <body>
 	<h2>삭제 페이지</h2>
 	<h4>게시글과 올린 파일이 모두 삭제됩니다!</h4>
-	<form name="delForm" action="${pageContext.request.contextPath}/deleteProc?num=${num}" method="post" onsubmit="return passCheck()">
+	<form name="delForm" action="${pageContext.request.contextPath}/deleteProc.do?num=${num}" method="post" onsubmit="return passCheck()">
 		<table border="1">
 			<tr>
 				<th>파일 이름</th>
