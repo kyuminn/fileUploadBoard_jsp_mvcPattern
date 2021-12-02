@@ -5,10 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>수정하기</title>
+<script src="${pageContext.request.contextPath}/script.js"></script>
 </head>
 <body>
 	<h2>수정 페이지</h2>
-	<form action="${pageContext.request.contextPath}/updateProc.do?num=${vo.num}" method="post" encType="multipart/form-data">
+	<form action="${pageContext.request.contextPath}/updateProc.do?num=${vo.num}" method="post" encType="multipart/form-data" 
+	name="updateForm" onsubmit="return UpdatePassCheck()">
 		<table border="1">
 			<tr>
 				<th width="150px">파일 설명</th>

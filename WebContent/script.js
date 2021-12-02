@@ -19,8 +19,22 @@ function uploadCheck() {
 		document.uploadForm.password.focus();
 		return false;
 	}
+}
 
-		
+function UpdatePassCheck(){
+	if (document.updateForm.password.value==""){
+		alert("비밀번호를 입력하세요!");
+		document.updateForm.password.focus();
+		return false;
+	}
+}
+
+function DeletePassCheck(){
+	if (document.delForm.password.value==""){
+		alert("비밀번호를 입력하세요!");
+		document.delForm.password.focus();
+		return false;
+	}
 }
 
 

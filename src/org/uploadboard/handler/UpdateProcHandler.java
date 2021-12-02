@@ -28,9 +28,7 @@ public class UpdateProcHandler implements CommandHandler{
 		request.setCharacterEncoding("UTF-8");
 		int num = Integer.parseInt(request.getParameter("num"));
 		int uploadFileSizeLimit = 5 * 1024 *1024;
-		String encType= "UTF-8";
 		String uploadFilePath = "C:/upload";
-		HashMap<String,String> paramMap = new HashMap<>();
 		File dir = new File(uploadFilePath);
 		
 		// 수정하기 전에 입력한 비밀번호 검증먼저
