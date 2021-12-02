@@ -26,13 +26,15 @@
 				</td>
 			</tr>
 			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" name="password"></td>
+				<!-- 파일보다 비밀번호 먼저 받아서 검증할 수 있도록 순서 조정함 -->
+			</tr>
+			<tr>
 				<th>새로 올릴 파일</th>
 				<td><input type="file" name="updateFile"></td>
 			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td><input type="password" name="password"></td>
-			</tr>
+
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" value="수정"> &nbsp;

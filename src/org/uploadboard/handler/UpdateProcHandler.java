@@ -40,6 +40,7 @@ public class UpdateProcHandler implements CommandHandler{
 			String description = "";
 			String fileName = "";
 			String uploadedFileName="";
+			int result = -1;
 			
 			while((part = mp.readNextPart())!=null) {
 				String name = new String(part.getName());
@@ -55,17 +56,23 @@ public class UpdateProcHandler implements CommandHandler{
 					String value = new String(paramPart.getStringValue());
 					System.out.println(name+":"+value);
 				}else if (part.isFile()) {
-					FilePart filePart =(FilePart)part;
-					fileName = filePart.getFileName();
-					System.out.println("fileName"+fileName);
-					if (fileName !=null) {
-						fileName = new String(filePart.getFileName());
-						long size = filePart.writeTo(dir);
-						System.out.println("파일 사이즈 : "+ size);
+					if (updateservice.isValidPassword(num, password)) { // 비밀번호 검증 후 맞으면 파일 업로드
+						result = 1 ;
+						FilePart filePart =(FilePart)part;
+						fileName = filePart.getFileName();
+						System.out.println(fileName);
+						if (fileName !=null) {
+							fileName = new String(filePart.getFileName());
+							System.out.println(fileName);
+							long size = filePart.writeTo(dir);
+
+						}
+					}else {
+						result = 0; // 비밀번호 일치하지 않음
 					}
 				}
 			}
-			int result = -1;
+
 			System.out.println(updateservice.isValidPassword(num, password)); // log 용
 			if(updateservice.isValidPassword(num, password)) {
 				BoardVo vo = new BoardVo();
@@ -74,8 +81,9 @@ public class UpdateProcHandler implements CommandHandler{
 				vo.setDescription(description);
 				vo.setNum(num);
 				vo.setPassword(password);
+				updateservice.update(vo);
 				
-				result = updateservice.update(vo);
+				//result = updateservice.update(vo);
 				
 				// 비밀번호가 일치할 때만 파일 수정 후 삭제
 				if (result == 1) {
