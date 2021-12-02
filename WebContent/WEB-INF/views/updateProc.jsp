@@ -10,9 +10,3 @@
  		history.go(-1);
  	</script>
  </c:if>
- <!--<c:if test="${result==-1 }">
- 	<script>
- 		alert("비밀번호를 입력해주세요!");
- 		history.go(-1);
- 	</script>
- </c:if> -->

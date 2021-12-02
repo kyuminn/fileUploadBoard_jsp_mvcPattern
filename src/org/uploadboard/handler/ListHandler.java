@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.uploadboard.model.dao.BoardDao;
 import org.uploadboard.model.service.ListService;
 import org.uploadboard.model.vo.BoardVo;
+import org.uploadboard.model.vo.Paging;
 
 public class ListHandler implements CommandHandler{
 	private BoardDao dao = BoardDao.getInstance();
@@ -19,36 +20,33 @@ public class ListHandler implements CommandHandler{
 	@Override
 	public String handlerAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String pageNum= request.getParameter("pageNum");
-		if (pageNum == null) {
-			pageNum = "1";
-		}
-		int pageSize = 3; // 한 페이지 당 글의 개수
-		int currentPage = Integer.parseInt(pageNum);
+		int pageNum = 0;
 		
-		// 페이지의 시작글 번호
-		int startRow = (currentPage-1)*pageSize+1;
-		// 페이지의 마지막 글 번호
-		int endRow = currentPage * pageSize;
-		// 전체 글 개수
-		int count = listService.getArticleCount();
-		List<BoardVo> ls = null;
-		if (count > 0) {
-			ls = listService.list(startRow, endRow);
+		if (request.getParameter("pageNum")==null) {
+			pageNum = 1;
 		}else {
-			ls = Collections.emptyList();
+			pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		}
-		// number 사용 안함
 		
-		request.setAttribute("currentPage", new Integer(currentPage));
-		request.setAttribute("startRow", new Integer(startRow));
-		request.setAttribute("endRow", new Integer(endRow));
-		request.setAttribute("count", new Integer(count));
-		request.setAttribute("pageSize", new Integer(pageSize));
-		request.setAttribute("ls", ls);
+		Paging page = new Paging();
+		page.getPageBlock(pageNum); // 페이지 블록 설정
+		page.pagedArticleList(pageNum); // 현재 페이지의 startRowNum 과 lastRowNum 설정
 		
+		List<BoardVo> ls  = listService.list(page);
+		if (ls.isEmpty()) {
+			request.setAttribute("ls", null);
+		}else {
+			request.setAttribute("ls", ls);
+			request.setAttribute("page", page);
+		}
 		
-
+		if (page.getStartPageNum() > page.getPageBlock()) {
+			request.setAttribute("firstBlock", true);
+		}
+		if (page.getLastPageNum() < page.getTotalPageCount()) {
+			request.setAttribute("lastBlock", true);
+		}
+		
 		return "/WEB-INF/views/list.jsp";
 	}
 

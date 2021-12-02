@@ -83,8 +83,6 @@ public class UpdateProcHandler implements CommandHandler{
 				vo.setPassword(password);
 				updateservice.update(vo);
 				
-				//result = updateservice.update(vo);
-				
 				// 비밀번호가 일치할 때만 파일 수정 후 삭제
 				if (result == 1) {
 					// 기존 파일 삭제

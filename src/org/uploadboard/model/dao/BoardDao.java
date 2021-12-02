@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.uploadboard.model.common.ConnectionUtil;
 import org.uploadboard.model.vo.BoardVo;
+import org.uploadboard.model.vo.Paging;
 
 public class BoardDao {
 	private static BoardDao instance = null;
@@ -47,30 +48,7 @@ public class BoardDao {
 	}
 	
 	// 리스트
-	public List<BoardVo> list(int startRow, int endRow){
-// 페이징 처리 전
-//		List<BoardVo> ls = new ArrayList<>();
-//		String sql = "select * from uploadboard order by num desc";
-//		try(Connection conn = ConnectionUtil.getConnection();
-//				PreparedStatement pstmt = conn.prepareStatement(sql);
-//				ResultSet rs = pstmt.executeQuery()){
-//			while(rs.next()) {
-//				BoardVo vo = new BoardVo();
-//				vo.setNum(rs.getInt("num"));
-//				vo.setDescription(rs.getString("description"));
-//				vo.setFilename(rs.getString("filename"));
-//				vo.setUploader(rs.getString("uploader"));
-//				vo.setRegdate(rs.getTimestamp("regdate"));
-//				vo.setReadcount(rs.getInt("readcount"));
-//				vo.setPassword(rs.getString("password"));
-//				ls.add(vo);
-//			}
-//		}catch(SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return ls != null ? ls : null;
-//		페이징 처리 후
-		
+	public List<BoardVo> list(Paging page){
 		String sql="select * from "
 				+ "(select rownum rnum,num,description,filename,uploader,"
 				+ "regdate,readcount,password from "
@@ -80,8 +58,8 @@ public class BoardDao {
 		ResultSet rs = null;
 		try(Connection conn= ConnectionUtil.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, page.getStartRowNum());
+			pstmt.setInt(2, page.getLastRowNum());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				do {
