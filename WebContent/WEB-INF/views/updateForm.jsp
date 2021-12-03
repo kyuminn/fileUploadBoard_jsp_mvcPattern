@@ -10,7 +10,7 @@
 <body>
 	<h2>수정 페이지</h2>
 	<form action="${pageContext.request.contextPath}/updateProc.do?num=${vo.num}" method="post" encType="multipart/form-data" 
-	name="updateForm" onsubmit="return UpdatePassCheck()">
+	name="updateForm" onsubmit="return UpdateCheck()">
 		<table border="1">
 			<tr>
 				<th width="150px">파일 설명</th>
@@ -32,7 +32,7 @@
 			</tr>
 			<tr>
 				<th>새로 올릴 파일</th>
-				<td><input type="file" name="updateFile"></td>
+				<td><input type="file" name="updateFile" id="updateFile"></td>
 			</tr>
 
 			<tr>

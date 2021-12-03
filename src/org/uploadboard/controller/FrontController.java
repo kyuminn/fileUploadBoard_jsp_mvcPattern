@@ -14,11 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.uploadboard.handler.CommandHandler;
 
+// HttpServlet을 상속함으로써 FrontController가 servlet임을 선언
 public class FrontController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
+	//명령어와 명령어 처리 핸들러 클래스 정보를 담아놓는 Map
 	private Map<String, CommandHandler> commandHandlerMap = new HashMap<>();
 	
+	
+	// 서블릿이 동작할 때 가장 먼저 수행되는 init Method
+	// properties 파일 읽어들여서 commandHandlerMap에 저장
 	@Override
 	public void init() throws ServletException {
 		String contextConfigFile = this.getInitParameter("properties");
@@ -26,7 +31,7 @@ public class FrontController extends HttpServlet{
 		FileInputStream fis = null;
 		try {
 			String path = this.getServletContext().getRealPath(contextConfigFile);
-			fis = new FileInputStream(path);
+			fis = new FileInputStream(path); // 빨대꽂기
 			pr.load(fis);
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -37,7 +42,7 @@ public class FrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
-		Iterator keyIt = pr.keySet().iterator();
+		Iterator<Object> keyIt = pr.keySet().iterator();
 		while(keyIt.hasNext()) {
 			String command = (String)keyIt.next();
 			String handlerClassName = pr.getProperty(command);
@@ -58,6 +63,12 @@ public class FrontController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String requestURI= req.getRequestURI().toString();
 		String command = requestURI.substring(req.getContextPath().length());
+		
+		// 메인 페이지 요청했을때 로그용 예시 
+		System.out.println(requestURI); // /org.uploadboard/main.do
+		System.out.println(command); // /main.do
+		System.out.println(req.getContextPath()); // /org.uploadboard
+		
 		CommandHandler handler = null;
 		String viewPage= null;
 		if (requestURI.indexOf(req.getContextPath())==0) {

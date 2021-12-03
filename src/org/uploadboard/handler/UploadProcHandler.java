@@ -27,17 +27,31 @@ public class UploadProcHandler implements CommandHandler{
 		int uploadFileSizeLimit = 5 * 1024 *1024;
 		String encType= "UTF-8";
 		String uploadFilePath = "C:/upload";
+		
+		// 해당 디렉터리가 없으면 디렉터리 생성
+		File dir = new File(uploadFilePath);
+		if (!dir.exists()) {
+			try {
+				dir.mkdir();
+				System.out.println("C:/upload 생성 완료!");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("C:/upload 폴더 확인");
+		}
+		
 		MultipartRequest multi = null;
 		try {
 			multi = new MultipartRequest(request,uploadFilePath,uploadFileSizeLimit,encType, new DefaultFileRenamePolicy());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("서버상 실제 경로 :"+ uploadFilePath);
+		System.out.println("파일 업로드 경로 :"+ uploadFilePath);
 		// form 의 encType이 multipart/form-data 인 경우 request 객체로 파라미터를 가져올 수 없다.
 		// 대신 MultipartRequest 객체로 가져올 수 있음!
 		String uploader =multi.getParameter("uploader");
-		String fileName = multi.getFilesystemName("uploadFile");
+		String fileName = multi.getFilesystemName("uploadFile"); // 파일 이름의 경우 getFilesystemName method로 가져옴
 		String description = multi.getParameter("description");
 		String password = multi.getParameter("password");
 		BoardVo article = new BoardVo();

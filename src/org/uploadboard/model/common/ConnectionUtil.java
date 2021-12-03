@@ -13,7 +13,7 @@ public class ConnectionUtil {
 	static {
 		try {
 			InitialContext ctx = new InitialContext();
-			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/myOracle"); // ConnectionPool 객체 얻어오기!
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/myOracle"); // ConnectionPool 객체 얻어오기! (context.xml과 web.xml에 resource 설정필요)
 		}catch(NamingException e) {}
 	}
 	

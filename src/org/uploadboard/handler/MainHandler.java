@@ -11,6 +11,8 @@ public class MainHandler implements CommandHandler {
 	@Override
 	public String handlerAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// views (jsp 파일) 에 사용자에게 보여줄 정보 있으면
+		// request.setAttribute 이용
 		return "/WEB-INF/views/main.jsp";
 	}
 

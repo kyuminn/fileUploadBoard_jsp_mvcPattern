@@ -29,7 +29,7 @@ public class ListHandler implements CommandHandler{
 		}
 		
 		Paging page = new Paging();
-		page.getPageBlock(pageNum); // 페이지 블록 설정
+		page.getPageBlock(pageNum); // 시작 페이지 번호 , 끝 페이지 번호  설정
 		page.pagedArticleList(pageNum); // 현재 페이지의 startRowNum 과 lastRowNum 설정
 		
 		List<BoardVo> ls  = listService.list(page);
@@ -41,10 +41,10 @@ public class ListHandler implements CommandHandler{
 		}
 		
 		if (page.getStartPageNum() > page.getPageBlock()) {
-			request.setAttribute("firstBlock", true);
+			request.setAttribute("firstBlock", true); // 이전 버튼 활성화
 		}
 		if (page.getLastPageNum() < page.getTotalPageCount()) {
-			request.setAttribute("lastBlock", true);
+			request.setAttribute("lastBlock", true); // 다음 버튼 활성화
 		}
 		
 		return "/WEB-INF/views/list.jsp";

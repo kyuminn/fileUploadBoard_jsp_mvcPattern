@@ -19,7 +19,7 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="file" name="uploadFile">
+					<input type="file" name="uploadFile" id="uploadFile">
 				</td>
 			</tr>
 			<tr>

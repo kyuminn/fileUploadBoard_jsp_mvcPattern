@@ -11,12 +11,15 @@ import org.uploadboard.model.common.ConnectionUtil;
 import org.uploadboard.model.vo.BoardVo;
 import org.uploadboard.model.vo.Paging;
 
+// DB과 연결된 부분 
 public class BoardDao {
 	private static BoardDao instance = null;
+	// 다른 클래스에서 직접 DAO객체 생성할 수 없도록 private 한 생성자 만들기 
 	private BoardDao() {
 		
 	}
 	
+	// Singleton pattern
 	public static BoardDao getInstance() {
 		if (instance== null) {
 			synchronized(BoardDao.class) {

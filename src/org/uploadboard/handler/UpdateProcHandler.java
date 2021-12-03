@@ -3,7 +3,6 @@ package org.uploadboard.handler;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +12,7 @@ import org.uploadboard.model.dao.BoardDao;
 import org.uploadboard.model.service.UpdateService;
 import org.uploadboard.model.vo.BoardVo;
 
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
 import com.oreilly.servlet.multipart.ParamPart;
@@ -41,6 +41,7 @@ public class UpdateProcHandler implements CommandHandler{
 			String fileName = "";
 			String uploadedFileName="";
 			int result = -1;
+
 			
 			while((part = mp.readNextPart())!=null) {
 				String name = new String(part.getName());
@@ -59,10 +60,11 @@ public class UpdateProcHandler implements CommandHandler{
 					if (updateservice.isValidPassword(num, password)) { // 비밀번호 검증 후 맞으면 파일 업로드
 						result = 1 ;
 						FilePart filePart =(FilePart)part;
+						// 같은 이름의 파일이 존재하면 뒤에 숫자 붙여서 업로드됨
+						filePart.setRenamePolicy(new DefaultFileRenamePolicy());
 						fileName = filePart.getFileName();
-						System.out.println(fileName);
 						if (fileName !=null) {
-							fileName = new String(filePart.getFileName());
+							//fileName = new String(filePart.getFileName());
 							System.out.println(fileName);
 							long size = filePart.writeTo(dir);
 

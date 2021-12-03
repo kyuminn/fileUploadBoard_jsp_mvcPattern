@@ -15,12 +15,17 @@
 	<servlet>
 		<servlet-name>FrontController</servlet-name>
 		<servlet-class>org.uploadboard.controller.FrontController</servlet-class>
+		<!--  서블릿이 동작할 때 파라미터 초기화 -->
 		<init-param>
 			<param-name>properties</param-name>
 			<param-value>/WEB-INF/properties/handler.properties</param-value>
 		</init-param>
 	</servlet>
 	
+	<!-- 
+	do 로 끝나는 request가 오면 FrontController 가 request 분석 후 맞는 Handler에게 전달
+	script.js 의 경우는 FrontController가 관여하지 못하도록!
+	 -->
 	<servlet-mapping>
 		<servlet-name>FrontController</servlet-name>
 		<url-pattern>*.do</url-pattern>
