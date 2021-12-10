@@ -8,7 +8,7 @@
 <title>내용</title>
 </head>
 <body>
-<!-- 수정 -->
+<!-- 수정123 -->
 	<h2>Content</h2>
 	<table border="1">
 		<tr>
